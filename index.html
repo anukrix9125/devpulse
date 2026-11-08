@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevPulse | Developer Resource Hub</title>
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header>
+    <nav aria-label="Main Navigation">
+      <a href="/"><strong>DevPulse</strong></a>
+      <ul>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#submit">Submit Resource</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Hero / Intro Section -->
+    <section id="hero">
+      <h1>Curated Tools for Modern Web Developers</h1>
+      <p>Discover, evaluate, and share industry-standard development resources.</p>
+      
+      <!-- Search Component Form -->
+      <form role="search">
+        <label for="search-input">Search resources:</label>
+        <input type="search" id="search-input" name="q" placeholder="e.g., React, Tailwind, Express...">
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
+    <!-- Main Resource Feed -->
+    <section id="resources" aria-labelledby="resources-heading">
+      <h2 id="resources-heading">Featured Resources</h2>
+
+      <!-- Sample Resource Card Item -->
+      <article>
+        <header>
+          <h3>Tailwind CSS Documentation</h3>
+          <p>Category: <span>CSS / Design</span></p>
+        </header>
+        <p>A utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.</p>
+        <footer>
+          <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Visit Resource</a>
+          <button type="button" aria-label="Upvote Tailwind CSS">▲ 142</button>
+        </footer>
+      </article>
+
+    </section>
+
+    <!-- Community Submission Section -->
+    <section id="submit" aria-labelledby="submit-heading">
+      <h2 id="submit-heading">Submit a Resource</h2>
+      <form action="#" method="POST">
+        <div>
+          <label for="title">Resource Title:</label>
+          <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+          <label for="url">URL:</label>
+          <input type="url" id="url" name="url" required>
+        </div>
+        <div>
+          <label for="category">Category:</label>
+          <select id="category" name="category">
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="devops">DevOps</option>
+          </select>
+        </div>
+        <button type="submit">Submit Resource</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Global Footer -->
+  <footer>
+    <p>&copy; 2026 DevPulse. Built with semantic HTML5.</p>
+  </footer>
+
+</body>
+</html>

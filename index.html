@@ -1,86 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DevPulse | Developer Resource Hub</title>
+  <!-- Tailwind CSS Play CDN for Rapid Prototyping -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-950">
 
   <!-- Site Navigation Header -->
-  <header>
-    <nav aria-label="Main Navigation">
-      <a href="/"><strong>DevPulse</strong></a>
-      <ul>
-        <li><a href="#resources">Resources</a></li>
-        <li><a href="#submit">Submit Resource</a></li>
+  <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur border-b border-slate-800">
+    <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between" aria-label="Main Navigation">
+      <a href="/" class="text-xl font-bold tracking-tight text-cyan-400">DevPulse</a>
+      <ul class="flex items-center gap-6 text-sm font-medium text-slate-300">
+        <li><a href="#resources" class="hover:text-cyan-400 transition-colors">Resources</a></li>
+        <li><a href="#submit" class="bg-cyan-500 text-slate-950 px-4 py-2 rounded-lg font-semibold hover:bg-cyan-400 transition-colors">Submit</a></li>
       </ul>
     </nav>
   </header>
 
   <!-- Main Content Area -->
-  <main>
+  <main class="flex-grow max-w-6xl mx-auto px-4 py-10 w-full space-y-16">
+    
     <!-- Hero / Intro Section -->
-    <section id="hero">
-      <h1>Curated Tools for Modern Web Developers</h1>
-      <p>Discover, evaluate, and share industry-standard development resources.</p>
+    <section id="hero" class="text-center space-y-6 py-12">
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white max-w-3xl mx-auto">
+        Curated Tools for Modern Web Developers
+      </h1>
+      <p class="text-lg text-slate-400 max-w-xl mx-auto">
+        Discover, evaluate, and share industry-standard development resources built by engineers, for engineers.
+      </p>
       
       <!-- Search Component Form -->
-      <form role="search">
-        <label for="search-input">Search resources:</label>
-        <input type="search" id="search-input" name="q" placeholder="e.g., React, Tailwind, Express...">
-        <button type="submit">Search</button>
-      </form>
+      <div class="max-w-xl mx-auto">
+        <label for="search-input" class="sr-only">Search resources</label>
+        <input 
+          type="search" 
+          id="search-input" 
+          placeholder="Search by title, category, or keyword..." 
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors shadow-inner"
+        >
+      </div>
     </section>
 
-    <!-- Main Resource Feed -->
-    <section id="resources" aria-labelledby="resources-heading">
-      <h2 id="resources-heading">Featured Resources</h2>
+    <!-- Main Resource Feed Grid -->
+    <section id="resources" aria-labelledby="resources-heading" class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <h2 id="resources-heading" class="text-2xl font-bold tracking-tight text-white">
+          Featured Resources
+        </h2>
+        <span id="resource-count" class="text-xs font-semibold bg-slate-900 border border-slate-800 px-3 py-1 rounded-full text-slate-400">
+          Loading resources...
+        </span>
+      </div>
 
-      <!-- Sample Resource Card Item -->
-      <article>
-        <header>
-          <h3>Tailwind CSS Documentation</h3>
-          <p>Category: <span>CSS / Design</span></p>
-        </header>
-        <p>A utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.</p>
-        <footer>
-          <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Visit Resource</a>
-          <button type="button" aria-label="Upvote Tailwind CSS">▲ 142</button>
-        </footer>
-      </article>
-
+      <!-- Dynamically Rendered Grid Container -->
+      <div id="resources-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JavaScript will inject <article> cards here dynamically -->
+      </div>
     </section>
 
     <!-- Community Submission Section -->
-    <section id="submit" aria-labelledby="submit-heading">
-      <h2 id="submit-heading">Submit a Resource</h2>
-      <form action="#" method="POST">
-        <div>
-          <label for="title">Resource Title:</label>
-          <input type="text" id="title" name="title" required>
+    <section id="submit" aria-labelledby="submit-heading" class="max-w-xl mx-auto w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-6">
+      <div>
+        <h2 id="submit-heading" class="text-xl font-bold text-white">Submit a Resource</h2>
+        <p class="text-sm text-slate-400">Share a helpful tool with the DevPulse community.</p>
+      </div>
+
+      <form id="submit-form" class="space-y-4">
+        <div class="space-y-1.5">
+          <label for="title" class="block text-xs font-semibold text-slate-300 uppercase">Resource Title</label>
+          <input type="text" id="title" name="title" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500">
         </div>
-        <div>
-          <label for="url">URL:</label>
-          <input type="url" id="url" name="url" required>
+        <div class="space-y-1.5">
+          <label for="url" class="block text-xs font-semibold text-slate-300 uppercase">URL Link</label>
+          <input type="url" id="url" name="url" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500">
         </div>
-        <div>
-          <label for="category">Category:</label>
-          <select id="category" name="category">
-            <option value="frontend">Frontend</option>
-            <option value="backend">Backend</option>
-            <option value="devops">DevOps</option>
+        <div class="space-y-1.5">
+          <label for="category" class="block text-xs font-semibold text-slate-300 uppercase">Category</label>
+          <select id="category" name="category" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500">
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="CSS / Design">CSS / Design</option>
+            <option value="Database">Database</option>
+            <option value="DevOps">DevOps</option>
           </select>
         </div>
-        <button type="submit">Submit Resource</button>
+        <button type="submit" class="w-full bg-cyan-500 text-slate-950 font-semibold py-3 rounded-xl hover:bg-cyan-400 transition-colors">
+          Publish Resource
+        </button>
       </form>
     </section>
   </main>
 
   <!-- Global Footer -->
-  <footer>
-    <p>&copy; 2026 DevPulse. Built with semantic HTML5.</p>
+  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <p>&copy; 2026 DevPulse. Built with semantic HTML5, Tailwind CSS, and Vanilla JavaScript DOM APIs.</p>
   </footer>
 
+  <!-- Application Logic Script -->
+  <script src="app.js"></script>
 </body>
 </html>

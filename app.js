@@ -1,4 +1,4 @@
-// Application State Arrays & Flags
+// Application State Management
 let localResources = [
   { id: 1, title: "Tailwind CSS Documentation", category: "CSS / Design", description: "A utility-first CSS framework packed with classes that can be composed to build any design.", url: "https://tailwindcss.com", upvotes: 142 },
   { id: 2, title: "React Official Guide", category: "Frontend", description: "The library for web and native user interfaces. Build modular components with state.", url: "https://react.dev", upvotes: 310 },
@@ -20,7 +20,7 @@ const toggleFeedBtn = document.getElementById("toggle-feed-btn");
 const feedTitle = document.getElementById("feed-title");
 
 /**
- * Asynchronous function to fetch live developer articles from DEV.to API
+ * Fetch live articles from DEV.to API with error handling and loading indicators
  */
 async function fetchLiveResources() {
   resourcesGrid.innerHTML = `
@@ -33,14 +33,10 @@ async function fetchLiveResources() {
 
   try {
     const response = await fetch("https://dev.to/api/articles?per_page=9");
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
     const data = await response.json();
 
-    // Map external API payload to match our application resource schema
     liveApiResources = data.map((article, index) => ({
       id: `live-${index + 1}`,
       title: article.title,
@@ -50,15 +46,13 @@ async function fetchLiveResources() {
       upvotes: article.public_reactions_count || Math.floor(Math.random() * 50) + 10
     }));
 
-    activeDataset = liveApiResources;
     feedTitle.textContent = "Live DEV.to Articles Feed";
     toggleFeedBtn.textContent = "Switch to Local Resources";
     isShowingLiveFeed = true;
     
-    renderResources(activeDataset);
+    renderResources(liveApiResources);
 
   } catch (error) {
-    console.error("Failed to fetch live resources:", error);
     resourcesGrid.innerHTML = `
       <div class="col-span-full text-center py-12 bg-red-950/20 border border-red-900/50 rounded-2xl p-6 text-red-400 space-y-2">
         <p class="font-semibold">Failed to load live developer feed.</p>
@@ -73,17 +67,14 @@ async function fetchLiveResources() {
 }
 
 /**
- * Switch back to local hardcoded/submitted resources
+ * Switch back to local hardcoded/submitted resources view
  */
-function switchToLocalFeed() {
+window.switchToLocalFeed = function() {
   isShowingLiveFeed = false;
   feedTitle.textContent = "Featured Resources";
   toggleFeedBtn.textContent = "Switch to Live DEV.to Feed";
   renderResources(localResources);
 }
-
-// Determine active dataset pointer
-let activeDataset = localResources;
 
 /**
  * Render resource cards into the DOM grid container
@@ -92,7 +83,6 @@ let activeDataset = localResources;
 function renderResources(items) {
   resourcesGrid.innerHTML = "";
 
-  // Apply search filter if query exists
   const filtered = items.filter(res => 
     res.title.toLowerCase().includes(currentSearchQuery) || 
     res.category.toLowerCase().includes(currentSearchQuery) ||
@@ -143,7 +133,7 @@ function renderResources(items) {
 }
 
 /**
- * Event Listener: Toggle between Local and Live API feeds
+ * Event Listeners
  */
 toggleFeedBtn.addEventListener("click", () => {
   if (isShowingLiveFeed) {
@@ -153,18 +143,12 @@ toggleFeedBtn.addEventListener("click", () => {
   }
 });
 
-/**
- * Event Listener: Real-time search input
- */
 searchInput.addEventListener("input", (e) => {
   currentSearchQuery = e.target.value.toLowerCase().trim();
   const datasetToSearch = isShowingLiveFeed ? liveApiResources : localResources;
   renderResources(datasetToSearch);
 });
 
-/**
- * Event Listener: Community resource submission form
- */
 submitForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -188,14 +172,10 @@ submitForm.addEventListener("submit", (e) => {
 
   localResources.unshift(newResource);
   renderResources(localResources);
-
   submitForm.reset();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-/**
- * Attach click listeners to upvote buttons
- */
 function attachUpvoteListeners() {
   const upvoteButtons = document.querySelectorAll(".upvote-btn");
   upvoteButtons.forEach(btn => {
@@ -211,5 +191,5 @@ function attachUpvoteListeners() {
   });
 }
 
-// Initial render call on script load
+// Initial render call
 renderResources(localResources);
